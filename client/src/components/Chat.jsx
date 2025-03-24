@@ -38,7 +38,7 @@ const Chat = () => {
       console.error("Error:", error);
       setMessages([
         ...newMessages,
-        { role: "assistant", content: "⚠️ Error: Could not get response." },
+        { role: "assistant", content: " Error: Could not get response." },
       ]);
     } finally {
       setLoading(false);
@@ -46,28 +46,21 @@ const Chat = () => {
   };
 
   return (
-    <div style={{ padding: 20, maxWidth: 600, margin: "auto" }}>
-      <h2>AI Chat (Free Mistral API)</h2>
-      <div
-        style={{
-          height: 400,
-          overflowY: "auto",
-          border: "1px solid gray",
-          padding: 10,
-          marginBottom: 10,
-        }}
-      >
+    <div className="chat-container">
+      <h2>BigBen AI Chat Model</h2>
+      <div className="chat-box">
         {messages.map((msg, index) => (
           <p
             key={index}
-            style={{ textAlign: msg.role === "user" ? "right" : "left" }}
+            className={msg.role === "user" ? "user-message" : "ai-message"}
           >
             <strong>{msg.role === "user" ? "You" : "AI"}:</strong> {msg.content}
           </p>
         ))}
         {loading && (
-          <p>
-            <em>AI is typing...</em>
+          <p className="typing">
+            {" "}
+            <em>Reasoning ...</em>{" "}
           </p>
         )}
       </div>
@@ -75,11 +68,11 @@ const Chat = () => {
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        style={{ width: "80%", padding: 10 }}
+        className="chat-input"
         placeholder="Type a message..."
         disabled={loading}
       />
-      <button onClick={sendMessage} style={{ padding: 10 }} disabled={loading}>
+      <button onClick={sendMessage} className="chat-button" disabled={loading}>
         {loading ? "Sending..." : "Send"}
       </button>
     </div>
